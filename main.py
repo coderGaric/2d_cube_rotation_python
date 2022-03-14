@@ -1,3 +1,5 @@
+from art import logo
+
 class RotateCube:
     init_cube = [
     [1, 2, 3],
@@ -5,11 +7,11 @@ class RotateCube:
     [7, 8, 9]
 ]
     def __init__(self):
-        self._cube = self.init_cube
-        self._length = len(self._cube)
+        self.cube = self.init_cube
+        self.length = len(self.cube)
 
-    def form(self, cube, turn):
-        str = f"{turn}\n-------------"
+    def form(self, cube):
+        str = f"\n-------------"
         for i in range(len(cube)):
             str += "\n|"
             for j in range(len(cube)):
@@ -17,45 +19,48 @@ class RotateCube:
             str += "\n-------------"
         return str + "\n"
 
-    def __changePosition(self):
-        new_form = [list() for _ in range(self._length)]
-        for i in range(self._length):
-            for j in range(self._length):
-                new_form[i].append(self._cube[j][i])
+    def changePosition(self):
+        new_form = [list() for _ in range(self.length)]
+        for i in range(self.length):
+            for j in range(self.length):
+                new_form[i].append(self.cube[j][i])
         return new_form
 
     def start(self):
-        return self.form(self._cube, "initial position")
+        return self.form(self.cube)
 
     def clockwise(self):
-        new_form = self.__changePosition()
-        for i in range(self._length):
+        new_form = self.changePosition()
+        for i in range(self.length):
             new_form[i].reverse()
-        self._cube = new_form
-        return self.form(self._cube, "after clockwise turn")
+        self.cube = new_form
+        return self.form(self.cube)
 
     def counter_clockwise(self):
-        new_form = self.__changePosition()
+        new_form = self.changePosition()
         new_form.reverse()
-        self._cube = new_form
-        return self.form(self._cube, "afer counter clockwise turn")
+        self.cube = new_form
+        return self.form(self.cube)
         
+    def on(self):
+        print(logo)
+        print("^" * 35)
+        print(self.start())
+        print("Intruction:\n1 - rotate clockwise\n2 - rotate counter clockwise\n3 - exit")
+        print("\n" + "^" * 35 + "\n")
+        
+        choice = False
+        while not choice :
+            turn = input("Your choice: ")
+            if turn == "1":
+                print(self.clockwise())
+            elif turn == "2":
+                print(self.counter_clockwise())
+            elif turn == "3":
+                print("\n" + "^" * 35 + "\n")
+                print("Bye!")
+                choice = True
+                
 
 cube = RotateCube()
-print(cube.start())
-print(cube.clockwise())
-print(cube.counter_clockwise())
-print(cube.counter_clockwise())
-print(cube.counter_clockwise())
-print(cube.counter_clockwise())
-print(cube.counter_clockwise())
-
-print(cube.start())
-print(cube.counter_clockwise())
-print(cube.clockwise())
-print(cube.clockwise())
-print(cube.clockwise())
-print(cube.clockwise())
-print(cube.clockwise())
-
-
+cube.on()
